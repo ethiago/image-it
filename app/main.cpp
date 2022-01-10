@@ -21,7 +21,7 @@ int main(int argc, char * argv[])
     auto matrix = imageit::parse(storage.begin(), storage.end());
 
     if(!matrix)
-        return -1;
+        throw std::runtime_error("no matix");
 
     std::string filename("file.png");
     boost::apply_visitor([filename](auto const& m){

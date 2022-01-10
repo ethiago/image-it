@@ -42,7 +42,7 @@ namespace imageit{ namespace parser
     //using base_fp_parser;
 
     auto const V1 = x3::rule<class V1, ast::V1>()
-        = base_fp_parser | '(' >> base_fp_parser >> ')';
+        = base_fp_parser;
 
     auto const V2 = x3::rule<class V2, ast::V2>()
         = '(' >> base_fp_parser >> ',' >> base_fp_parser >> ')';
@@ -98,8 +98,7 @@ namespace imageit
             bool r = phrase_parse(begin, end,
                                   std::forward<Parse>(parse), blank, ast);
 
-            if (!r || begin != end) // fail if we did not get a full match
-                return {};
+            if(!r) throw std::runtime_error("no r");
             
             return std::move(ast);
         }
@@ -127,6 +126,6 @@ namespace imageit
         if(m && detail::allLinesHaveSameSize(*m))
             return m;
         else
-            return {};
+            throw std::runtime_error("No all lines have same size");
     }
 }
